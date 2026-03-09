@@ -1,0 +1,24 @@
+- name: Install desktop applications
+  ansible.builtin.apt:
+    name:
+      - vlc
+      - gimp
+      - libreoffice
+      - flatpak
+    state: present
+
+- name: Add Flathub repository
+  community.general.flatpak_remote:
+    name: flathub
+    flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
+    state: present
+
+- name: Install Postman via Flatpak
+  community.general.flatpak:
+    name: com.getpostman.Postman
+    state: present
+
+- name: Install Telegram via Flatpak
+  community.general.flatpak:
+    name: org.telegram.desktop
+    state: present

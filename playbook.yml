@@ -1,0 +1,41 @@
+- name: Configure workstation
+  hosts: local
+  become: true
+
+  roles:
+    - role: system
+      tags: system
+    - role: base
+      tags: base
+    - role: ufw
+      tags: ufw
+    - role: ssh
+      tags: ssh
+    - role: git
+      tags: git
+    - role: zsh
+      tags: zsh
+    - role: fonts
+      tags: fonts
+    - role: python
+      tags: python
+    - role: terminal
+      tags: terminal
+    - role: docker
+      tags: docker
+    - role: nodejs
+      tags: nodejs
+    - role: vscode
+      tags: vscode
+    - role: brave
+      tags: brave
+    - role: kubernetes
+      tags: kubernetes
+    - role: desktop
+      tags: desktop
+    - role: productivity
+      tags: productivity
+    - role: monitoring
+      tags: monitoring
+    - role: security
+      tags: security

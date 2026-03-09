@@ -1,0 +1,25 @@
+- name: Update apt cache
+  ansible.builtin.apt:
+    update_cache: true
+    cache_valid_time: 3600
+
+- name: Install base packages
+  ansible.builtin.apt:
+    name:
+      - build-essential
+      - curl
+      - wget
+      - git
+      - vim
+      - neovim
+      - htop
+      - tmux
+      - unzip
+      - zip
+      - jq
+      - tree
+      - ca-certificates
+      - gnupg
+      - apt-transport-https
+      - net-tools
+    state: present

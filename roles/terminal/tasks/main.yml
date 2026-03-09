@@ -1,0 +1,70 @@
+- name: Install terminal tools from apt
+  ansible.builtin.apt:
+    name:
+      - fzf
+      - bat
+      - ripgrep
+    state: present
+
+- name: Install tldr via pipx
+  become: false
+  community.general.pipx:
+    name: tldr
+    state: present
+
+- name: Download eza GPG key
+  ansible.builtin.get_url:
+    url: https://raw.githubusercontent.com/eza-community/eza/main/deb.asc
+    dest: /tmp/gierens.asc
+    mode: "0644"
+
+- name: Dearmor eza GPG key
+  ansible.builtin.command:
+    cmd: gpg --dearmor -o /usr/share/keyrings/gierens.gpg /tmp/gierens.asc
+    creates: /usr/share/keyrings/gierens.gpg
+
+- name: Clean up eza ASCII key
+  ansible.builtin.file:
+    path: /tmp/gierens.asc
+    state: absent
+
+- name: Remove old eza ASCII key if present
+  ansible.builtin.file:
+    path: /usr/share/keyrings/gierens.asc
+    state: absent
+
+- name: Add eza repository
+  ansible.builtin.apt_repository:
+    repo: "deb [arch=amd64 signed-by=/usr/share/keyrings/gierens.gpg] http://deb.gierens.de stable main"
+    filename: gierens
+    state: present
+
+- name: Install eza
+  ansible.builtin.apt:
+    name: eza
+    state: present
+    update_cache: true
+
+- name: Check if lazydocker is installed
+  ansible.builtin.command: which lazydocker
+  register: lazydocker_check
+  failed_when: false
+  changed_when: false
+
+- name: Download lazydocker install script
+  ansible.builtin.get_url:
+    url: https://raw.githubusercontent.com/jesseduffield/lazydocker/master/scripts/install_update_linux.sh
+    dest: /tmp/install_lazydocker.sh
+    mode: "0755"
+  when: lazydocker_check.rc != 0
+
+- name: Install lazydocker
+  ansible.builtin.command: /tmp/install_lazydocker.sh
+  when: lazydocker_check.rc != 0
+  changed_when: true
+
+- name: Clean up lazydocker install script
+  ansible.builtin.file:
+    path: /tmp/install_lazydocker.sh
+    state: absent
+  when: lazydocker_check.rc != 0

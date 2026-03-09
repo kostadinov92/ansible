@@ -1,0 +1,26 @@
+- name: Install Python development packages
+  ansible.builtin.apt:
+    name:
+      - python3
+      - python3-pip
+      - python3-venv
+      - python3-dev
+      - pipx
+    state: present
+
+- name: Ensure pipx path is set for user
+  become: false
+  ansible.builtin.command: pipx ensurepath
+  changed_when: false
+
+- name: Install Python dev tools via pipx
+  become: false
+  community.general.pipx:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - black
+    - ruff
+    - mypy
+    - pytest
+    - uv

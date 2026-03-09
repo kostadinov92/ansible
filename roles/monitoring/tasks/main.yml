@@ -1,0 +1,7 @@
+- name: Install monitoring tools
+  ansible.builtin.apt:
+    name:
+      - btop
+      - ncdu
+      - duf
+    state: present

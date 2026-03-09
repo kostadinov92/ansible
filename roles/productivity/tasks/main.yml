@@ -1,0 +1,7 @@
+- name: Install productivity apps
+  ansible.builtin.apt:
+    name:
+      - flameshot
+      - copyq
+      - nemo
+    state: present

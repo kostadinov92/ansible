@@ -1,0 +1,61 @@
+- name: Install zsh
+  ansible.builtin.apt:
+    name: zsh
+    state: present
+
+- name: Set zsh as default shell for user
+  ansible.builtin.user:
+    name: "{{ ansible_user_id }}"
+    shell: /usr/bin/zsh
+
+- name: Check if oh-my-zsh is installed
+  become: false
+  ansible.builtin.stat:
+    path: "{{ lookup('env', 'HOME') }}/.oh-my-zsh"
+  register: ohmyzsh
+
+- name: Download oh-my-zsh install script
+  become: false
+  ansible.builtin.get_url:
+    url: https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
+    dest: /tmp/install_ohmyzsh.sh
+    mode: "0755"
+  when: not ohmyzsh.stat.exists
+
+- name: Install oh-my-zsh
+  become: false
+  ansible.builtin.command: /tmp/install_ohmyzsh.sh --unattended
+  when: not ohmyzsh.stat.exists
+  changed_when: true
+
+- name: Clean up oh-my-zsh install script
+  become: false
+  ansible.builtin.file:
+    path: /tmp/install_ohmyzsh.sh
+    state: absent
+  when: not ohmyzsh.stat.exists
+
+- name: Install zsh-autosuggestions plugin
+  become: false
+  ansible.builtin.git:
+    repo: https://github.com/zsh-users/zsh-autosuggestions.git
+    dest: "{{ lookup('env', 'HOME') }}/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
+    depth: 1
+    version: master
+  failed_when: false
+
+- name: Install zsh-syntax-highlighting plugin
+  become: false
+  ansible.builtin.git:
+    repo: https://github.com/zsh-users/zsh-syntax-highlighting.git
+    dest: "{{ lookup('env', 'HOME') }}/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
+    depth: 1
+    version: master
+  failed_when: false
+
+- name: Enable plugins in .zshrc
+  become: false
+  ansible.builtin.lineinfile:
+    path: "{{ lookup('env', 'HOME') }}/.zshrc"
+    regexp: '^plugins='
+    line: "plugins=(git docker python pip fzf zsh-autosuggestions zsh-syntax-highlighting)"

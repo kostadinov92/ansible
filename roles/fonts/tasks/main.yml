@@ -1,0 +1,31 @@
+- name: Create fonts directory
+  become: false
+  ansible.builtin.file:
+    path: "{{ lookup('env', 'HOME') }}/.local/share/fonts"
+    state: directory
+    mode: "0755"
+
+- name: Download MesloLGS Nerd Font
+  become: false
+  ansible.builtin.get_url:
+    url: "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/Meslo.zip"
+    dest: /tmp/Meslo.zip
+    mode: "0644"
+
+- name: Extract Meslo Nerd Font
+  become: false
+  ansible.builtin.unarchive:
+    src: /tmp/Meslo.zip
+    dest: "{{ lookup('env', 'HOME') }}/.local/share/fonts"
+    remote_src: true
+    mode: "0755"
+
+- name: Refresh font cache
+  become: false
+  ansible.builtin.command: fc-cache -fv
+  changed_when: false
+
+- name: Clean up font zip
+  ansible.builtin.file:
+    path: /tmp/Meslo.zip
+    state: absent

@@ -1,0 +1,11 @@
+- name: Install KeePassXC
+  ansible.builtin.apt:
+    name: keepassxc
+    state: present
+
+- name: Install WireGuard
+  ansible.builtin.apt:
+    name:
+      - wireguard
+      - wireguard-tools
+    state: present
