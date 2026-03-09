@@ -59,3 +59,22 @@
     path: "{{ lookup('env', 'HOME') }}/.zshrc"
     regexp: '^plugins='
     line: "plugins=(git docker python pip fzf zsh-autosuggestions zsh-syntax-highlighting)"
+
+- name: Enable PATH for local binaries
+  become: false
+  ansible.builtin.lineinfile:
+    path: "{{ lookup('env', 'HOME') }}/.zshrc"
+    regexp: '^# export PATH=\$HOME/bin'
+    line: "export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH"
+
+- name: Add custom aliases
+  become: false
+  ansible.builtin.blockinfile:
+    path: "{{ lookup('env', 'HOME') }}/.zshrc"
+    marker: "# {mark} ANSIBLE MANAGED ALIASES"
+    block: |
+      alias ll='eza -la'
+      alias cat='batcat'
+      alias dc='docker compose'
+      alias k='kubectl'
+      alias lg='lazydocker'
