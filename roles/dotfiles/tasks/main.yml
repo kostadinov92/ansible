@@ -1,0 +1,13 @@
+- name: Create kitty config directory
+  become: false
+  ansible.builtin.file:
+    path: "{{ lookup('env', 'HOME') }}/.config/kitty"
+    state: directory
+    mode: "0755"
+
+- name: Copy kitty config
+  become: false
+  ansible.builtin.copy:
+    src: kitty.conf
+    dest: "{{ lookup('env', 'HOME') }}/.config/kitty/kitty.conf"
+    mode: "0644"

@@ -4,6 +4,7 @@
       - fzf
       - bat
       - ripgrep
+      - kitty
     state: present
 
 - name: Install tldr via pipx
