@@ -7,6 +7,8 @@
       tags: system
     - role: base
       tags: base
+    - role: display
+      tags: display
     - role: ufw
       tags: ufw
     - role: ssh
