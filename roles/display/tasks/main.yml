@@ -12,10 +12,16 @@
       - lightdm-gtk-greeter
     state: present
 
+- name: Check if another display manager is active
+  ansible.builtin.stat:
+    path: /etc/systemd/system/display-manager.service
+  register: dm_service
+
 - name: Enable LightDM
   ansible.builtin.systemd:
     name: lightdm
     enabled: true
+  when: not dm_service.stat.exists
 
 - name: Install PipeWire audio stack
   ansible.builtin.apt:
@@ -54,7 +60,7 @@
     name:
       - xdg-utils
       - xdg-user-dirs
-      - policykit-1
+      - polkitd
       - udisks2
       - gvfs
       - gvfs-backends
