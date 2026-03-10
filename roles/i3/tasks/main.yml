@@ -20,6 +20,7 @@
       - xss-lock
       - lxpolkit
       - libnotify-bin
+      - kbdd
     state: present
 
 - name: Create i3 config directory
