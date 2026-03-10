@@ -58,6 +58,13 @@
     dest: "{{ lookup('env', 'HOME') }}/.config/i3/config"
     mode: "0644"
 
+- name: Copy power menu script
+  become: false
+  ansible.builtin.copy:
+    src: power-menu.sh
+    dest: "{{ lookup('env', 'HOME') }}/.config/i3/power-menu.sh"
+    mode: "0755"
+
 - name: Copy i3blocks config
   become: false
   ansible.builtin.copy:
