@@ -19,6 +19,7 @@
       - dex
       - xss-lock
       - lxpolkit
+      - libnotify-bin
     state: present
 
 - name: Create i3 config directory

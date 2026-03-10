@@ -156,6 +156,7 @@ bindsym XF86AudioPrev  exec --no-startup-id playerctl previous
 
 # Screenshot
 bindsym Print exec --no-startup-id flameshot gui
+bindsym $mod+p exec --no-startup-id flameshot gui
 
 # ------- Floating rules -------
 for_window [window_role="pop-up"]      floating enable
