@@ -39,5 +39,7 @@
       tags: monitoring
     - role: security
       tags: security
+    - role: i3
+      tags: i3
     - role: dotfiles
       tags: dotfiles

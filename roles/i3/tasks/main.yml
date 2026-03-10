@@ -1,0 +1,85 @@
+- name: Install i3 and utilities
+  ansible.builtin.apt:
+    name:
+      - i3
+      - i3blocks
+      - i3lock
+      - rofi
+      - picom
+      - dunst
+      - feh
+      - maim
+      - xclip
+      - brightnessctl
+      - playerctl
+      - pavucontrol
+      - network-manager-gnome
+      - blueman
+      - lm-sensors
+      - dex
+      - xss-lock
+      - policykit-1-gnome
+    state: present
+
+- name: Create i3 config directory
+  become: false
+  ansible.builtin.file:
+    path: "{{ lookup('env', 'HOME') }}/.config/i3"
+    state: directory
+    mode: "0755"
+
+- name: Create i3blocks config directory
+  become: false
+  ansible.builtin.file:
+    path: "{{ lookup('env', 'HOME') }}/.config/i3blocks"
+    state: directory
+    mode: "0755"
+
+- name: Create picom config directory
+  become: false
+  ansible.builtin.file:
+    path: "{{ lookup('env', 'HOME') }}/.config/picom"
+    state: directory
+    mode: "0755"
+
+- name: Create dunst config directory
+  become: false
+  ansible.builtin.file:
+    path: "{{ lookup('env', 'HOME') }}/.config/dunst"
+    state: directory
+    mode: "0755"
+
+- name: Copy i3 config
+  become: false
+  ansible.builtin.copy:
+    src: config
+    dest: "{{ lookup('env', 'HOME') }}/.config/i3/config"
+    mode: "0644"
+
+- name: Copy i3blocks config
+  become: false
+  ansible.builtin.copy:
+    src: i3blocks.conf
+    dest: "{{ lookup('env', 'HOME') }}/.config/i3blocks/config"
+    mode: "0644"
+
+- name: Copy picom config
+  become: false
+  ansible.builtin.copy:
+    src: picom.conf
+    dest: "{{ lookup('env', 'HOME') }}/.config/picom/picom.conf"
+    mode: "0644"
+
+- name: Copy dunst config
+  become: false
+  ansible.builtin.copy:
+    src: dunstrc
+    dest: "{{ lookup('env', 'HOME') }}/.config/dunst/dunstrc"
+    mode: "0644"
+
+- name: Create Pictures directory for wallpapers and screenshots
+  become: false
+  ansible.builtin.file:
+    path: "{{ lookup('env', 'HOME') }}/Pictures"
+    state: directory
+    mode: "0755"
