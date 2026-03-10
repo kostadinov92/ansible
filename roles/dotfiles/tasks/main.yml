@@ -11,3 +11,10 @@
     src: kitty.conf
     dest: "{{ lookup('env', 'HOME') }}/.config/kitty/kitty.conf"
     mode: "0644"
+
+- name: Copy zshrc
+  become: false
+  ansible.builtin.copy:
+    src: zshrc
+    dest: "{{ lookup('env', 'HOME') }}/.zshrc"
+    mode: "0644"

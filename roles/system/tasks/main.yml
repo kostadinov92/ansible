@@ -1,18 +1,18 @@
 - name: Set timezone
   community.general.timezone:
-    name: Europe/Sofia
+    name: "{{ timezone }}"
 
 - name: Set locale
   community.general.locale_gen:
-    name: en_US.UTF-8
+    name: "{{ locale }}"
     state: present
 
 - name: Set default locale
   ansible.builtin.copy:
     dest: /etc/default/locale
     content: |
-      LANG=en_US.UTF-8
-      LC_ALL=en_US.UTF-8
+      LANG={{ locale }}
+      LC_ALL={{ locale }}
     mode: "0644"
 
 - name: Install unattended-upgrades

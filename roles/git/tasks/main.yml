@@ -2,26 +2,26 @@
   become: false
   community.general.git_config:
     name: user.name
-    value: "Konstantin Kostadinov"
+    value: "{{ user_name }}"
     scope: global
 
 - name: Configure git user email
   become: false
   community.general.git_config:
     name: user.email
-    value: "kostadinov92@gmail.com"
+    value: "{{ user_email }}"
     scope: global
 
 - name: Set default branch to main
   become: false
   community.general.git_config:
     name: init.defaultBranch
-    value: main
+    value: "{{ default_branch }}"
     scope: global
 
 - name: Set default editor to nvim
   become: false
   community.general.git_config:
     name: core.editor
-    value: nvim
+    value: "{{ default_editor }}"
     scope: global

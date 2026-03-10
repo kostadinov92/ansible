@@ -9,3 +9,8 @@
       - wireguard
       - wireguard-tools
     state: present
+
+- name: Install Timeshift
+  ansible.builtin.apt:
+    name: timeshift
+    state: present

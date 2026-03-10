@@ -9,7 +9,7 @@
   community.crypto.openssh_keypair:
     path: "{{ lookup('env', 'HOME') }}/.ssh/id_ed25519"
     type: ed25519
-    comment: "kostadinov92@gmail.com"
+    comment: "{{ user_email }}"
   when: not ssh_key.stat.exists
 
 - name: Set correct permissions on .ssh directory
