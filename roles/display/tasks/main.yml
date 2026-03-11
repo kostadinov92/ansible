@@ -5,12 +5,21 @@
       - dbus-x11
     state: present
 
+- name: Pre-seed LightDM as default display manager
+  ansible.builtin.debconf:
+    name: lightdm
+    question: shared/default-x-display-manager
+    vtype: select
+    value: lightdm
+
 - name: Install LightDM
   ansible.builtin.apt:
     name:
       - lightdm
       - lightdm-gtk-greeter
     state: present
+  environment:
+    DEBIAN_FRONTEND: noninteractive
 
 - name: Check if another display manager is active
   ansible.builtin.stat:

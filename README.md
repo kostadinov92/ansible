@@ -1,6 +1,6 @@
-# Debian 13 Workstation Setup
+# Ubuntu Workstation Setup
 
-Ansible playbook to configure a Debian 13 (Trixie) desktop workstation from a minimal install.
+Ansible playbook to configure an Ubuntu desktop workstation from a minimal install.
 
 ## What's included
 
@@ -30,24 +30,14 @@ Ansible playbook to configure a Debian 13 (Trixie) desktop workstation from a mi
 
 ## Fresh install instructions
 
-### 1. Add your user to sudo group
-
-```bash
-su -
-usermod -aG sudo yourusername
-exit
-```
-
-Log out and back in completely.
-
-### 2. Install ansible and git
+### 1. Install ansible and git
 
 ```bash
 sudo apt update
 sudo apt install -y ansible git
 ```
 
-### 3. Clone and configure
+### 2. Clone and configure
 
 ```bash
 git clone https://github.com/kostadinov92/ansible.git ~/ansible
@@ -62,19 +52,19 @@ user_email: "your@email.com"
 timezone: "Your/Timezone"
 ```
 
-### 4. Install ansible collections
+### 3. Install ansible collections
 
 ```bash
 ansible-galaxy collection install -r requirements.yml
 ```
 
-### 5. Run the playbook
+### 4. Run the playbook
 
 ```bash
 ansible-playbook -i inventory playbook.yml -K
 ```
 
-### 6. After the playbook finishes
+### 5. After the playbook finishes
 
 - Log out and back in for zsh and docker group to take effect
 - At the login screen, select **i3** to use the tiling window manager
