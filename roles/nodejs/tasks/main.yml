@@ -4,11 +4,25 @@
     dest: /usr/share/keyrings/nodesource.asc
     mode: "0644"
 
-- name: Add NodeSource repository (Node 22 LTS)
-  ansible.builtin.apt_repository:
-    repo: "deb [arch=amd64 signed-by=/usr/share/keyrings/nodesource.asc] https://deb.nodesource.com/node_22.x nodistro main"
-    filename: nodesource
-    state: present
+- name: Add NodeSource repository (DEB822 format)
+  ansible.builtin.copy:
+    dest: /etc/apt/sources.list.d/nodesource.sources
+    content: |
+      Types: deb
+      URIs: https://deb.nodesource.com/node_22.x/
+      Suites: nodistro
+      Components: main
+      Architectures: amd64
+      Signed-By: /usr/share/keyrings/nodesource.asc
+    mode: "0644"
+
+- name: Remove legacy NodeSource .list files
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - /etc/apt/sources.list.d/nodesource.list
+    - /etc/apt/sources.list.d/nodesource.list.bak
 
 - name: Install Node.js
   ansible.builtin.apt:

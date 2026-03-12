@@ -34,11 +34,25 @@
     path: /usr/share/keyrings/gierens.asc
     state: absent
 
-- name: Add eza repository
-  ansible.builtin.apt_repository:
-    repo: "deb [arch=amd64 signed-by=/usr/share/keyrings/gierens.gpg] http://deb.gierens.de stable main"
-    filename: gierens
-    state: present
+- name: Add eza repository (DEB822 format)
+  ansible.builtin.copy:
+    dest: /etc/apt/sources.list.d/gierens.sources
+    content: |
+      Types: deb
+      URIs: http://deb.gierens.de/
+      Suites: stable
+      Components: main
+      Architectures: amd64
+      Signed-By: /usr/share/keyrings/gierens.gpg
+    mode: "0644"
+
+- name: Remove legacy eza .list files
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - /etc/apt/sources.list.d/gierens.list
+    - /etc/apt/sources.list.d/gierens.list.bak
 
 - name: Install eza
   ansible.builtin.apt:

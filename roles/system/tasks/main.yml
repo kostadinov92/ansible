@@ -1,10 +1,11 @@
-- name: Enable universe repository
-  ansible.builtin.apt_repository:
-    repo: >-
-      deb http://archive.ubuntu.com/ubuntu
-      {{ ansible_distribution_release }} universe
-    state: present
-    update_cache: true
+- name: Remove legacy universe .list file (already in ubuntu.sources)
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - /etc/apt/sources.list.d/archive_ubuntu_com_ubuntu.list
+    - /etc/apt/sources.list.d/archive_ubuntu_com_ubuntu.list.bak
+    - /etc/apt/sources.list.d/archive_ubuntu_com_ubuntu.sources
   when: ansible_distribution == "Ubuntu"
 
 - name: Set timezone

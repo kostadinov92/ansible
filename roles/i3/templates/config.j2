@@ -146,8 +146,8 @@ bindsym XF86AudioLowerVolume exec --no-startup-id "wpctl set-volume @DEFAULT_AUD
 bindsym XF86AudioMute        exec --no-startup-id "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && pkill -RTMIN+1 i3blocks"
 bindsym XF86AudioMicMute     exec --no-startup-id wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
 
-bindsym XF86MonBrightnessUp   exec --no-startup-id brightnessctl set +5%
-bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 5%-
+bindsym XF86MonBrightnessUp   exec --no-startup-id "brightnessctl set +5% && pkill -RTMIN+3 i3blocks"
+bindsym XF86MonBrightnessDown exec --no-startup-id "brightnessctl set 5%- && pkill -RTMIN+3 i3blocks"
 
 bindsym XF86AudioPlay  exec --no-startup-id playerctl play-pause
 bindsym XF86AudioPause exec --no-startup-id playerctl play-pause

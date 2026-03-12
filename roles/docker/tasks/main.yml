@@ -4,14 +4,25 @@
     dest: /usr/share/keyrings/docker.asc
     mode: "0644"
 
-- name: Add Docker apt repository
-  ansible.builtin.apt_repository:
-    repo: >-
-      deb [arch=amd64 signed-by=/usr/share/keyrings/docker.asc]
-      https://download.docker.com/linux/{{ ansible_distribution | lower }}
-      {{ ansible_distribution_release }} stable
-    filename: docker
-    state: present
+- name: Add Docker apt repository (DEB822 format)
+  ansible.builtin.copy:
+    dest: /etc/apt/sources.list.d/docker.sources
+    content: |
+      Types: deb
+      URIs: https://download.docker.com/linux/{{ ansible_distribution | lower }}/
+      Suites: {{ ansible_distribution_release }}
+      Components: stable
+      Architectures: amd64
+      Signed-By: /usr/share/keyrings/docker.asc
+    mode: "0644"
+
+- name: Remove legacy Docker .list files
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - /etc/apt/sources.list.d/docker.list
+    - /etc/apt/sources.list.d/docker.list.bak
 
 - name: Install Docker packages
   ansible.builtin.apt:

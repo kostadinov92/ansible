@@ -23,6 +23,21 @@
       - kbdd
     state: present
 
+- name: Add user to video group (for brightnessctl)
+  ansible.builtin.user:
+    name: "{{ lookup('env', 'USER') }}"
+    groups: video
+    append: true
+
+- name: Allow video group to control backlight
+  ansible.builtin.copy:
+    dest: /etc/udev/rules.d/90-backlight.rules
+    content: |
+      ACTION=="add", SUBSYSTEM=="backlight", RUN+="/bin/chgrp video /sys/class/backlight/%k/brightness"
+      ACTION=="add", SUBSYSTEM=="backlight", RUN+="/bin/chmod g+w /sys/class/backlight/%k/brightness"
+    mode: "0644"
+  notify: Reload udev rules
+
 - name: Create i3 config directory
   become: false
   ansible.builtin.file:

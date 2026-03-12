@@ -1,0 +1,29 @@
+#!/bin/bash
+# Left click: play/pause, right click: next
+case $BLOCK_BUTTON in
+    1) playerctl play-pause 2>/dev/null ;;
+    3) playerctl next 2>/dev/null ;;
+esac
+
+STATUS=$(playerctl status 2>/dev/null)
+[ "$STATUS" = "No players found" ] && exit 0
+[ -z "$STATUS" ] && exit 0
+
+ARTIST=$(playerctl metadata artist 2>/dev/null)
+TITLE=$(playerctl metadata title 2>/dev/null)
+[ -z "$TITLE" ] && exit 0
+
+if [ "$STATUS" = "Playing" ]; then
+    ICON=$'\uf04b'
+else
+    ICON=$'\uf04c'
+fi
+
+TEXT="$TITLE"
+[ -n "$ARTIST" ] && TEXT="$ARTIST - $TITLE"
+
+# Truncate to 40 chars
+[ ${#TEXT} -gt 40 ] && TEXT="${TEXT:0:37}..."
+
+echo "$ICON $TEXT"
+echo "$ICON $TITLE"

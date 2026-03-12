@@ -1,0 +1,14 @@
+#!/bin/bash
+COUNT=$(apt list --upgradable 2>/dev/null | grep -c upgradable)
+
+[ "$COUNT" -eq 0 ] && exit 0
+
+ICON=$'\uf019'
+echo "$ICON $COUNT"
+echo "$ICON $COUNT"
+
+if [ "$COUNT" -ge 50 ]; then
+    echo "#BF616A"
+elif [ "$COUNT" -ge 20 ]; then
+    echo "#EBCB8B"
+fi

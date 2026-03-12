@@ -1,7 +1,8 @@
 #!/bin/bash
-# Click to open file manager at /
+# Left click: home, right click: root
 case $BLOCK_BUTTON in
-    1) nemo / & ;;
+    1) nemo ~ & ;;
+    3) nemo / & ;;
 esac
 
 ROOT=$(df -h / | awk 'NR==2{print $3 "/" $2}')

@@ -4,11 +4,25 @@
     dest: /usr/share/keyrings/brave-browser-archive-keyring.gpg
     mode: "0644"
 
-- name: Add Brave apt repository
-  ansible.builtin.apt_repository:
-    repo: "deb [arch=amd64 signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main"
-    filename: brave-browser
-    state: present
+- name: Add Brave apt repository (DEB822 format)
+  ansible.builtin.copy:
+    dest: /etc/apt/sources.list.d/brave-browser.sources
+    content: |
+      Types: deb
+      URIs: https://brave-browser-apt-release.s3.brave.com/
+      Suites: stable
+      Components: main
+      Architectures: amd64
+      Signed-By: /usr/share/keyrings/brave-browser-archive-keyring.gpg
+    mode: "0644"
+
+- name: Remove legacy Brave .list files
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - /etc/apt/sources.list.d/brave-browser.list
+    - /etc/apt/sources.list.d/brave-browser.list.bak
 
 - name: Install Brave browser
   ansible.builtin.apt:

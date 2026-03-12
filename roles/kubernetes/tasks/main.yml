@@ -4,11 +4,25 @@
     dest: /usr/share/keyrings/kubernetes.asc
     mode: "0644"
 
-- name: Add Kubernetes apt repository
-  ansible.builtin.apt_repository:
-    repo: "deb [arch=amd64 signed-by=/usr/share/keyrings/kubernetes.asc] https://pkgs.k8s.io/core:/stable:/v1.32/deb/ /"
-    filename: kubernetes
-    state: present
+- name: Add Kubernetes apt repository (DEB822 format)
+  ansible.builtin.copy:
+    dest: /etc/apt/sources.list.d/kubernetes.sources
+    content: |
+      Types: deb
+      URIs: https://pkgs.k8s.io/core:/stable:/v1.32/deb/
+      Suites: /
+      Components:
+      Architectures: amd64
+      Signed-By: /usr/share/keyrings/kubernetes.asc
+    mode: "0644"
+
+- name: Remove legacy Kubernetes .list files
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - /etc/apt/sources.list.d/kubernetes.list
+    - /etc/apt/sources.list.d/kubernetes.list.bak
 
 - name: Install kubectl
   ansible.builtin.apt:
