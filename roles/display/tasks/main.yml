@@ -24,13 +24,13 @@
 - name: Check if another display manager is active
   ansible.builtin.stat:
     path: /etc/systemd/system/display-manager.service
-  register: dm_service
+  register: display_dm_service
 
 - name: Enable LightDM
   ansible.builtin.systemd:
     name: lightdm
     enabled: true
-  when: not dm_service.stat.exists
+  when: not display_dm_service.stat.exists
 
 - name: Install PipeWire audio stack
   ansible.builtin.apt:
@@ -59,10 +59,58 @@
       - network-manager
     state: present
 
+- name: Configure NetworkManager to manage all devices
+  ansible.builtin.copy:
+    dest: /etc/NetworkManager/conf.d/10-manage-all.conf
+    content: |
+      [device]
+      wifi.scan-rand-mac-address=no
+
+      [main]
+      plugins=keyfile
+
+      [ifupdown]
+      managed=true
+    mode: "0644"
+  notify: Restart NetworkManager
+
+- name: Check if systemd-networkd is active (Ubuntu Server)
+  ansible.builtin.systemd:
+    name: systemd-networkd
+  register: display_networkd_status
+  changed_when: false
+
+- name: Switch netplan to NetworkManager renderer (Ubuntu Server)
+  ansible.builtin.copy:
+    dest: /etc/netplan/01-network-manager.yaml
+    content: |
+      network:
+        version: 2
+        renderer: NetworkManager
+    mode: "0600"
+  when: display_networkd_status.status.ActiveState == "active"
+  notify: Apply netplan
+
+- name: Disable systemd-networkd (Ubuntu Server)
+  ansible.builtin.systemd:
+    name: systemd-networkd
+    enabled: false
+    state: stopped
+  when: display_networkd_status.status.ActiveState == "active"
+
+- name: Disable wpa_supplicant service (NetworkManager manages wifi)
+  ansible.builtin.systemd:
+    name: wpa_supplicant
+    enabled: false
+    state: stopped
+  when: display_networkd_status.status.ActiveState == "active"
+  failed_when: false
+
 - name: Enable NetworkManager
   ansible.builtin.systemd:
     name: NetworkManager
     enabled: true
+    state: started
 
 - name: Install desktop essentials
   ansible.builtin.apt:

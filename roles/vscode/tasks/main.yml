@@ -1,17 +1,33 @@
-- name: Add Microsoft GPG key
+- name: Check if VSCode is installed
+  ansible.builtin.command: dpkg -s code
+  register: vscode_installed
+  changed_when: false
+  failed_when: false
+
+- name: Download VSCode deb package
   ansible.builtin.get_url:
-    url: https://packages.microsoft.com/keys/microsoft.asc
-    dest: /usr/share/keyrings/microsoft.asc
+    url: https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64
+    dest: /tmp/code.deb
     mode: "0644"
+  when: vscode_installed.rc != 0
 
-- name: Add VSCode apt repository
-  ansible.builtin.apt_repository:
-    repo: "deb [arch=amd64 signed-by=/usr/share/keyrings/microsoft.asc] https://packages.microsoft.com/repos/code stable main"
-    filename: vscode
-    state: present
-
-- name: Install VSCode
+- name: Install VSCode from deb
   ansible.builtin.apt:
-    name: code
-    state: present
-    update_cache: true
+    deb: /tmp/code.deb
+  when: vscode_installed.rc != 0
+
+- name: Clean up VSCode deb package
+  ansible.builtin.file:
+    path: /tmp/code.deb
+    state: absent
+  when: vscode_installed.rc != 0
+
+- name: Remove manually added VSCode repo (managed by VSCode)
+  ansible.builtin.file:
+    path: /etc/apt/sources.list.d/vscode.list
+    state: absent
+
+- name: Remove manually added Microsoft GPG key (managed by VSCode)
+  ansible.builtin.file:
+    path: /usr/share/keyrings/microsoft.asc
+    state: absent

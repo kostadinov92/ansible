@@ -12,7 +12,7 @@
   become: false
   ansible.builtin.stat:
     path: "{{ lookup('env', 'HOME') }}/.oh-my-zsh"
-  register: ohmyzsh
+  register: zsh_ohmyzsh
 
 - name: Download oh-my-zsh install script
   become: false
@@ -20,12 +20,12 @@
     url: https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
     dest: /tmp/install_ohmyzsh.sh
     mode: "0755"
-  when: not ohmyzsh.stat.exists
+  when: not zsh_ohmyzsh.stat.exists
 
 - name: Install oh-my-zsh
   become: false
   ansible.builtin.command: /tmp/install_ohmyzsh.sh --unattended
-  when: not ohmyzsh.stat.exists
+  when: not zsh_ohmyzsh.stat.exists
   changed_when: true
 
 - name: Clean up oh-my-zsh install script
@@ -33,7 +33,7 @@
   ansible.builtin.file:
     path: /tmp/install_ohmyzsh.sh
     state: absent
-  when: not ohmyzsh.stat.exists
+  when: not zsh_ohmyzsh.stat.exists
 
 - name: Install zsh-autosuggestions plugin
   become: false

@@ -1,6 +1,6 @@
 # Ubuntu Workstation Setup
 
-Ansible playbook to configure an Ubuntu desktop workstation from a minimal install.
+Ansible playbook to configure an Ubuntu workstation from a minimal/server install. Also works on Ubuntu Desktop.
 
 ## What's included
 
@@ -8,7 +8,7 @@ Ansible playbook to configure an Ubuntu desktop workstation from a minimal insta
 |------|-------------|
 | system | Timezone, locale, unattended-upgrades |
 | base | Core packages (git, curl, build-essential, etc.) |
-| display | Xorg, LightDM, PipeWire, Bluetooth, NetworkManager |
+| display | Xorg, LightDM, PipeWire, Bluetooth, NetworkManager (auto-detects Server vs Desktop) |
 | ufw | Firewall (deny incoming, allow outgoing + SSH) |
 | ssh | Generate ed25519 SSH keypair |
 | git | Git config (name, email, editor, default branch) |
@@ -61,8 +61,11 @@ ansible-galaxy collection install -r requirements.yml
 ### 4. Run the playbook
 
 ```bash
-ansible-playbook -i inventory playbook.yml -K
+sudo ansible-playbook playbook.yml
 ```
+
+> **Note:** Running with `sudo` is recommended due to a [known incompatibility](https://github.com/ansible/ansible/issues/85837)
+> between Ansible and `sudo-rs` (the default on Ubuntu 25.10+). This avoids the become password prompt entirely.
 
 ### 5. After the playbook finishes
 
@@ -74,11 +77,14 @@ ansible-playbook -i inventory playbook.yml -K
 
 ```bash
 # Run everything
-ansible-playbook -i inventory playbook.yml -K
+sudo ansible-playbook playbook.yml
 
 # Run specific roles
-ansible-playbook -i inventory playbook.yml -K --tags "base,docker,i3"
+sudo ansible-playbook playbook.yml --tags "base,docker,i3"
 
 # Dry run
-ansible-playbook -i inventory playbook.yml -K --check
+sudo ansible-playbook playbook.yml --check
+
+# With diff output
+sudo ansible-playbook playbook.yml --diff
 ```

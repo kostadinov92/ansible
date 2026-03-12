@@ -1,0 +1,8 @@
+- name: Restart NetworkManager
+  ansible.builtin.systemd:
+    name: NetworkManager
+    state: restarted
+
+- name: Apply netplan
+  ansible.builtin.command: netplan apply
+  changed_when: true
