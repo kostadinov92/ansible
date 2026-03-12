@@ -1,18 +1,19 @@
-#!/bin/sh
+#!/bin/bash
+ICON=$'\uf11c'
 LAYOUT=$(dbus-send --dest=ru.gentoo.KbddService \
     /ru/gentoo/KbddService \
     ru.gentoo.kbdd.getCurrentLayout 2>/dev/null |
     awk '/uint32/{print $2}')
 
 case "$LAYOUT" in
-    0) echo " US" ;;
-    1) echo " BG" ;;
+    0) echo "$ICON US" ;;
+    1) echo "$ICON BG" ;;
     *) # Fallback to xset
         MASK=$(xset -q 2>/dev/null | grep 'LED mask' | awk '{print $NF}')
         if [ "$MASK" = "00000000" ]; then
-            echo " US"
+            echo "$ICON US"
         else
-            echo " BG"
+            echo "$ICON BG"
         fi
         ;;
 esac

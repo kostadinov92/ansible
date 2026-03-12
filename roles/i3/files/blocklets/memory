@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Click to open btop
 case $BLOCK_BUTTON in
     1) kitty --class floating -e btop & ;;
@@ -8,8 +8,9 @@ USED=$(free -h | awk '/Mem:/{print $3}')
 TOTAL=$(free -h | awk '/Mem:/{print $2}')
 PCT=$(free | awk '/Mem:/{printf "%.0f", $3/$2 * 100}')
 
-echo " $USED/$TOTAL"
-echo " $USED"
+ICON=$'\uf233'
+echo "$ICON $USED/$TOTAL"
+echo "$ICON $USED"
 
 if [ "$PCT" -ge 90 ]; then
     echo "#BF616A"

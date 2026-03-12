@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Left click: toggle mute, right click: open pavucontrol
 case $BLOCK_BUTTON in
     1) wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle ;;
@@ -11,14 +11,19 @@ VOL=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ 2>/dev/null)
 PCT=$(echo "$VOL" | awk '{printf "%.0f", $2*100}')
 MUTED=$(echo "$VOL" | grep -c MUTED)
 
+ICON_HIGH=$'\uf028'
+ICON_MED=$'\uf027'
+ICON_LOW=$'\uf026'
+ICON_MUTE=$'\uf026'
+
 if [ "$MUTED" = "1" ]; then
-    echo "󰝟 MUTE"
-    echo "󰝟 MUTE"
+    echo "$ICON_MUTE MUTE"
+    echo "$ICON_MUTE MUTE"
     echo "#BF616A"
 elif [ "$PCT" -ge 70 ]; then
-    echo "󰕾 ${PCT}%"
+    echo "$ICON_HIGH ${PCT}%"
 elif [ "$PCT" -ge 30 ]; then
-    echo "󰖀 ${PCT}%"
+    echo "$ICON_MED ${PCT}%"
 else
-    echo "󰕿 ${PCT}%"
+    echo "$ICON_LOW ${PCT}%"
 fi

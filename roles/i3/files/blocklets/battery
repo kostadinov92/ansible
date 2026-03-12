@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 BAT_PATH="/sys/class/power_supply/BAT0"
 
 # Skip if no battery (desktop machine)
@@ -8,19 +8,19 @@ BATT=$(cat "$BAT_PATH/capacity" 2>/dev/null || echo "?")
 STATUS=$(cat "$BAT_PATH/status" 2>/dev/null || echo "Unknown")
 
 if [ "$STATUS" = "Charging" ]; then
-    ICON="󰂄"
+    ICON=$'\uf0e7'
 elif [ "$STATUS" = "Full" ]; then
-    ICON="󰁹"
+    ICON=$'\uf240'
 elif [ "$BATT" -ge 80 ] 2>/dev/null; then
-    ICON="󰂁"
+    ICON=$'\uf240'
 elif [ "$BATT" -ge 60 ] 2>/dev/null; then
-    ICON="󰁿"
+    ICON=$'\uf241'
 elif [ "$BATT" -ge 40 ] 2>/dev/null; then
-    ICON="󰁽"
+    ICON=$'\uf242'
 elif [ "$BATT" -ge 20 ] 2>/dev/null; then
-    ICON="󰁻"
+    ICON=$'\uf243'
 else
-    ICON="󰂃"
+    ICON=$'\uf244'
 fi
 
 echo "$ICON $BATT%"

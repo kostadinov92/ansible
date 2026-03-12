@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Click to open file manager at /
 case $BLOCK_BUTTON in
     1) nemo / & ;;
@@ -8,8 +8,9 @@ ROOT=$(df -h / | awk 'NR==2{print $3 "/" $2}')
 HOME_DISK=$(df -h /home | awk 'NR==2{print $3 "/" $2}')
 USE_PCT=$(df / | awk 'NR==2{gsub(/%/,""); print $5}')
 
-echo " / $ROOT   /home $HOME_DISK"
-echo " / $ROOT"
+ICON=$'\uf0a0'
+echo "$ICON / $ROOT   /home $HOME_DISK"
+echo "$ICON / $ROOT"
 
 if [ "$USE_PCT" -ge 90 ]; then
     echo "#BF616A"

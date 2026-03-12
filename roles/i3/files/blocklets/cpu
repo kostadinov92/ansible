@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Click to open btop
 case $BLOCK_BUTTON in
     1) kitty --class floating -e btop & ;;
@@ -23,8 +23,9 @@ else
     PCT=0
 fi
 
-echo " ${PCT}%"
-echo " ${PCT}%"
+ICON=$'\uf2db'
+echo "$ICON ${PCT}%"
+echo "$ICON ${PCT}%"
 
 if [ "$PCT" -ge 90 ]; then
     echo "#BF616A"

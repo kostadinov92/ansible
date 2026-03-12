@@ -1,2 +1,4 @@
-#!/bin/sh
-echo " $(date '+%a %Y-%m-%d')  $(date '+%H:%M')"
+#!/bin/bash
+ICON_CAL=$'\uf073'
+ICON_CLK=$'\uf017'
+echo "$ICON_CAL $(date '+%a %Y-%m-%d') $ICON_CLK $(date '+%H:%M')"
