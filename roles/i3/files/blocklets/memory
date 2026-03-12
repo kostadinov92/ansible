@@ -1,0 +1,18 @@
+#!/bin/sh
+# Click to open btop
+case $BLOCK_BUTTON in
+    1) kitty --class floating -e btop & ;;
+esac
+
+USED=$(free -h | awk '/Mem:/{print $3}')
+TOTAL=$(free -h | awk '/Mem:/{print $2}')
+PCT=$(free | awk '/Mem:/{printf "%.0f", $3/$2 * 100}')
+
+echo " $USED/$TOTAL"
+echo " $USED"
+
+if [ "$PCT" -ge 90 ]; then
+    echo "#BF616A"
+elif [ "$PCT" -ge 75 ]; then
+    echo "#EBCB8B"
+fi

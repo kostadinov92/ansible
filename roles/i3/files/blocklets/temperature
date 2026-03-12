@@ -1,0 +1,23 @@
+#!/bin/sh
+# Try Package id 0 first, then fall back to first coretemp, then any temp
+TEMP=$(sensors 2>/dev/null | awk '
+    /Package id 0:/ { gsub(/\+/, ""); print $4; exit }
+    /Core 0:/ && !found { gsub(/\+/, ""); temp=$3; found=1 }
+    END { if (!found) print "N/A"; else if (temp) print temp }
+')
+
+# Extract numeric value for threshold checks
+NUM=$(echo "$TEMP" | grep -oP '[\d.]+' | head -1)
+
+echo " $TEMP"
+echo " $TEMP"
+
+if [ -n "$NUM" ]; then
+    HIGH=$(echo "$NUM" | awk '{print ($1 >= 85)}')
+    WARN=$(echo "$NUM" | awk '{print ($1 >= 70)}')
+    if [ "$HIGH" = "1" ]; then
+        echo "#BF616A"
+    elif [ "$WARN" = "1" ]; then
+        echo "#EBCB8B"
+    fi
+fi

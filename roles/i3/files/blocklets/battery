@@ -1,0 +1,38 @@
+#!/bin/sh
+BAT_PATH="/sys/class/power_supply/BAT0"
+
+# Skip if no battery (desktop machine)
+[ -d "$BAT_PATH" ] || exit 0
+
+BATT=$(cat "$BAT_PATH/capacity" 2>/dev/null || echo "?")
+STATUS=$(cat "$BAT_PATH/status" 2>/dev/null || echo "Unknown")
+
+if [ "$STATUS" = "Charging" ]; then
+    ICON="󰂄"
+elif [ "$STATUS" = "Full" ]; then
+    ICON="󰁹"
+elif [ "$BATT" -ge 80 ] 2>/dev/null; then
+    ICON="󰂁"
+elif [ "$BATT" -ge 60 ] 2>/dev/null; then
+    ICON="󰁿"
+elif [ "$BATT" -ge 40 ] 2>/dev/null; then
+    ICON="󰁽"
+elif [ "$BATT" -ge 20 ] 2>/dev/null; then
+    ICON="󰁻"
+else
+    ICON="󰂃"
+fi
+
+echo "$ICON $BATT%"
+echo "$ICON $BATT%"
+
+if [ "$STATUS" != "Charging" ] && [ "$STATUS" != "Full" ]; then
+    if [ "$BATT" -le 10 ] 2>/dev/null; then
+        echo "#BF616A"
+        notify-send -u critical "Battery Critical" "Battery at ${BATT}%" 2>/dev/null
+    elif [ "$BATT" -le 20 ] 2>/dev/null; then
+        echo "#BF616A"
+    elif [ "$BATT" -le 35 ] 2>/dev/null; then
+        echo "#EBCB8B"
+    fi
+fi

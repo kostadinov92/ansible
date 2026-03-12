@@ -1,0 +1,33 @@
+#!/bin/sh
+# Click to open btop
+case $BLOCK_BUTTON in
+    1) kitty --class floating -e btop & ;;
+esac
+
+# Read CPU usage from /proc/stat (faster than top)
+read -r CPU1 < /proc/stat
+sleep 0.3
+read -r CPU2 < /proc/stat
+
+IDLE1=$(echo "$CPU1" | awk '{print $5}')
+TOTAL1=$(echo "$CPU1" | awk '{s=0; for(i=2;i<=NF;i++) s+=$i; print s}')
+IDLE2=$(echo "$CPU2" | awk '{print $5}')
+TOTAL2=$(echo "$CPU2" | awk '{s=0; for(i=2;i<=NF;i++) s+=$i; print s}')
+
+DIFF_IDLE=$((IDLE2 - IDLE1))
+DIFF_TOTAL=$((TOTAL2 - TOTAL1))
+
+if [ "$DIFF_TOTAL" -gt 0 ]; then
+    PCT=$(( (DIFF_TOTAL - DIFF_IDLE) * 100 / DIFF_TOTAL ))
+else
+    PCT=0
+fi
+
+echo " ${PCT}%"
+echo " ${PCT}%"
+
+if [ "$PCT" -ge 90 ]; then
+    echo "#BF616A"
+elif [ "$PCT" -ge 75 ]; then
+    echo "#EBCB8B"
+fi

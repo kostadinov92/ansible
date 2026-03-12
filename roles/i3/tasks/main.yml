@@ -65,12 +65,26 @@
     dest: "{{ lookup('env', 'HOME') }}/.config/i3/power-menu.sh"
     mode: "0755"
 
+- name: Create i3blocks blocklets directory
+  become: false
+  ansible.builtin.file:
+    path: "{{ lookup('env', 'HOME') }}/.config/i3blocks/blocklets"
+    state: directory
+    mode: "0755"
+
 - name: Copy i3blocks config
   become: false
   ansible.builtin.copy:
     src: i3blocks.conf
     dest: "{{ lookup('env', 'HOME') }}/.config/i3blocks/config"
     mode: "0644"
+
+- name: Copy i3blocks blocklet scripts
+  become: false
+  ansible.builtin.copy:
+    src: "blocklets/"
+    dest: "{{ lookup('env', 'HOME') }}/.config/i3blocks/blocklets/"
+    mode: "0755"
 
 - name: Copy picom config
   become: false

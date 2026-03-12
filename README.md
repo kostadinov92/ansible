@@ -61,11 +61,10 @@ ansible-galaxy collection install -r requirements.yml
 ### 4. Run the playbook
 
 ```bash
-sudo ansible-playbook playbook.yml
+./run.sh
 ```
 
-> **Note:** Running with `sudo` is recommended due to a [known incompatibility](https://github.com/ansible/ansible/issues/85837)
-> between Ansible and `sudo-rs` (the default on Ubuntu 25.10+). This avoids the become password prompt entirely.
+The wrapper script handles a [known incompatibility](https://github.com/ansible/ansible/issues/85837) between Ansible and `sudo-rs` (default on Ubuntu 25.10+) by temporarily switching to classic sudo for the run.
 
 ### 5. After the playbook finishes
 
@@ -77,14 +76,14 @@ sudo ansible-playbook playbook.yml
 
 ```bash
 # Run everything
-sudo ansible-playbook playbook.yml
+./run.sh
 
 # Run specific roles
-sudo ansible-playbook playbook.yml --tags "base,docker,i3"
+./run.sh --tags "base,docker,i3"
 
 # Dry run
-sudo ansible-playbook playbook.yml --check
+./run.sh --check
 
 # With diff output
-sudo ansible-playbook playbook.yml --diff
+./run.sh --diff
 ```

@@ -167,12 +167,11 @@ for_window [class="Blueman-manager"]   floating enable
 for_window [title="File Transfer*"]    floating enable
 
 # ------- Keyboard layout -------
-# Toggle keyboard layout
-exec_always --no-startup-id setxkbmap -layout {{ keyboard_layouts }} -variant {{ keyboard_variant }} -option {{ keyboard_toggle }}
+# Define layouts (kbdd handles per-window tracking)
+exec_always --no-startup-id "setxkbmap -layout {{ keyboard_layouts }} -variant {{ keyboard_variant }} -option {{ keyboard_toggle }} && pkill kbdd; kbdd"
 
 # ------- Startup -------
 exec --no-startup-id ibus exit
-exec --no-startup-id kbdd
 exec --no-startup-id picom --config ~/.config/picom/picom.conf -b
 exec --no-startup-id dunst -config ~/.config/dunst/dunstrc
 exec --no-startup-id nm-applet

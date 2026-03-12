@@ -1,0 +1,2 @@
+#!/bin/sh
+echo " $(date '+%a %Y-%m-%d')  $(date '+%H:%M')"

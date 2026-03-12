@@ -1,0 +1,30 @@
+#!/bin/sh
+# Click to open network settings
+case $BLOCK_BUTTON in
+    1) nm-connection-editor & ;;
+    3) nmcli device wifi rescan 2>/dev/null & ;;
+esac
+
+WIFI=$(nmcli -t -f active,ssid dev wifi 2>/dev/null | grep '^yes' | cut -d: -f2)
+ETH=$(nmcli -t -f type,state dev 2>/dev/null | grep 'ethernet:connected')
+
+if [ -n "$WIFI" ]; then
+    # Get signal strength
+    SIGNAL=$(nmcli -t -f active,signal dev wifi 2>/dev/null | grep '^yes' | cut -d: -f2)
+    if [ -n "$SIGNAL" ] && [ "$SIGNAL" -ge 70 ]; then
+        ICON="󰤨"
+    elif [ -n "$SIGNAL" ] && [ "$SIGNAL" -ge 40 ]; then
+        ICON="󰤢"
+    else
+        ICON="󰤟"
+    fi
+    echo "$ICON $WIFI"
+    echo "$ICON $WIFI"
+elif [ -n "$ETH" ]; then
+    echo "󰈀 ethernet"
+    echo "󰈀 eth"
+else
+    echo "󰤭 disconnected"
+    echo "󰤭 disc"
+    echo "#BF616A"
+fi

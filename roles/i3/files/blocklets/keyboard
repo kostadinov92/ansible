@@ -1,0 +1,18 @@
+#!/bin/sh
+LAYOUT=$(dbus-send --dest=ru.gentoo.KbddService \
+    /ru/gentoo/KbddService \
+    ru.gentoo.kbdd.getCurrentLayout 2>/dev/null |
+    awk '/uint32/{print $2}')
+
+case "$LAYOUT" in
+    0) echo " US" ;;
+    1) echo " BG" ;;
+    *) # Fallback to xset
+        MASK=$(xset -q 2>/dev/null | grep 'LED mask' | awk '{print $NF}')
+        if [ "$MASK" = "00000000" ]; then
+            echo " US"
+        else
+            echo " BG"
+        fi
+        ;;
+esac
