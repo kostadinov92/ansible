@@ -116,6 +116,20 @@
     dest: "{{ lookup('env', 'HOME') }}/.config/dunst/dunstrc"
     mode: "0644"
 
+- name: Create rofi config directory
+  become: false
+  ansible.builtin.file:
+    path: "{{ lookup('env', 'HOME') }}/.config/rofi"
+    state: directory
+    mode: "0755"
+
+- name: Copy rofi config
+  become: false
+  ansible.builtin.copy:
+    src: rofi-config.rasi
+    dest: "{{ lookup('env', 'HOME') }}/.config/rofi/config.rasi"
+    mode: "0644"
+
 - name: Create Pictures directory for wallpapers and screenshots
   become: false
   ansible.builtin.file:

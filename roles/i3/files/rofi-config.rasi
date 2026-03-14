@@ -1,0 +1,67 @@
+configuration {
+    show-icons: true;
+    icon-theme: "Adwaita";
+    font: "MesloLGS Nerd Font 11";
+}
+
+* {
+    bg:       #2E3440;
+    bg-alt:   #3B4252;
+    fg:       #D8DEE9;
+    accent:   #5E81AC;
+    urgent:   #BF616A;
+}
+
+window {
+    background-color: @bg;
+    border:           2px;
+    border-color:     @accent;
+    border-radius:    6px;
+    width:            40%;
+}
+
+mainbox {
+    background-color: transparent;
+}
+
+inputbar {
+    background-color: @bg-alt;
+    text-color:       @fg;
+    padding:          8px 12px;
+    border-radius:    6px 6px 0 0;
+}
+
+prompt {
+    text-color: @accent;
+}
+
+entry {
+    text-color:       @fg;
+    placeholder-color: #4C566A;
+}
+
+listview {
+    background-color: transparent;
+    lines:            8;
+    padding:          4px 0;
+}
+
+element {
+    background-color: transparent;
+    text-color:       @fg;
+    padding:          6px 12px;
+}
+
+element selected {
+    background-color: @accent;
+    text-color:       #ECEFF4;
+    border-radius:    4px;
+}
+
+element-icon {
+    size: 24px;
+}
+
+element-text {
+    vertical-align: 0.5;
+}
