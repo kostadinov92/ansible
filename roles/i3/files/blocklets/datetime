@@ -1,4 +1,10 @@
 #!/bin/bash
+# Left click: popup calendar
+case $BLOCK_BUTTON in
+    1) yad --calendar --undecorated --fixed --close-on-unfocus --skip-taskbar \
+           --no-buttons --mouse --width=300 --height=200 --title="" >/dev/null 2>&1 & ;;
+esac
+
 ICON_CAL=$'\uf073'
 ICON_CLK=$'\uf017'
 echo "$ICON_CAL $(date '+%a %Y-%m-%d') $ICON_CLK $(date '+%H:%M')"

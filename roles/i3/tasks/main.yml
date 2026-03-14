@@ -22,6 +22,10 @@
       - lxpolkit
       - libnotify-bin
       - kbdd
+      - xdotool
+      - arandr
+      - autotiling
+      - yad
     state: present
 
 - name: Add user to video group (for brightnessctl)
