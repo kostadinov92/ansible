@@ -1,0 +1,3 @@
+#!/bin/bash
+PCT=$(brightnessctl -m | cut -d, -f4 | tr -d '%')
+dunstify -a brightness -u low -r 9902 -h "int:value:$PCT" "Brightness" "${PCT}%"

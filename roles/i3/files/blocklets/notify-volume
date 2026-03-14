@@ -1,0 +1,8 @@
+#!/bin/bash
+VOL=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{printf "%.0f", $2*100}')
+MUTE=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | grep -c MUTED)
+if [ "$MUTE" -eq 1 ]; then
+    dunstify -a volume -u low -r 9901 "Volume" "Muted"
+else
+    dunstify -a volume -u low -r 9901 -h "int:value:$VOL" "Volume" "${VOL}%"
+fi

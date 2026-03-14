@@ -4,6 +4,7 @@
       - i3
       - i3blocks
       - i3lock
+      - i3lock-fancy
       - rofi
       - picom
       - dunst

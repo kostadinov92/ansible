@@ -77,16 +77,16 @@ bindsym $mod+space focus mode_toggle
 bindsym $mod+a focus parent
 
 # ------- Workspaces -------
-set $ws1  "1"
-set $ws2  "2"
-set $ws3  "3"
-set $ws4  "4"
-set $ws5  "5"
-set $ws6  "6"
-set $ws7  "7"
-set $ws8  "8"
-set $ws9  "9"
-set $ws10 "10"
+set $ws1  "1: "
+set $ws2  "2: "
+set $ws3  "3: "
+set $ws4  "4: "
+set $ws5  "5: "
+set $ws6  "6: "
+set $ws7  "7: "
+set $ws8  "8: "
+set $ws9  "9: "
+set $ws10 "10: "
 
 bindsym $mod+1 workspace number $ws1
 bindsym $mod+2 workspace number $ws2
@@ -138,16 +138,16 @@ bindsym $mod+Shift+r restart
 bindsym $mod+Shift+e exec --no-startup-id ~/.config/i3/power-menu.sh
 
 # Lock screen
-bindsym $mod+Shift+x exec --no-startup-id i3lock -c 2E3440
+bindsym $mod+Shift+x exec --no-startup-id i3lock-fancy -p
 
 # ------- Media / brightness keys -------
-bindsym XF86AudioRaiseVolume exec --no-startup-id "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ && pkill -RTMIN+1 i3blocks"
-bindsym XF86AudioLowerVolume exec --no-startup-id "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- && pkill -RTMIN+1 i3blocks"
-bindsym XF86AudioMute        exec --no-startup-id "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && pkill -RTMIN+1 i3blocks"
+bindsym XF86AudioRaiseVolume exec --no-startup-id "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ && pkill -RTMIN+1 i3blocks && ~/.config/i3blocks/blocklets/notify-volume"
+bindsym XF86AudioLowerVolume exec --no-startup-id "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- && pkill -RTMIN+1 i3blocks && ~/.config/i3blocks/blocklets/notify-volume"
+bindsym XF86AudioMute        exec --no-startup-id "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && pkill -RTMIN+1 i3blocks && ~/.config/i3blocks/blocklets/notify-volume"
 bindsym XF86AudioMicMute     exec --no-startup-id wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
 
-bindsym XF86MonBrightnessUp   exec --no-startup-id "brightnessctl set +5% && pkill -RTMIN+3 i3blocks"
-bindsym XF86MonBrightnessDown exec --no-startup-id "brightnessctl set 5%- && pkill -RTMIN+3 i3blocks"
+bindsym XF86MonBrightnessUp   exec --no-startup-id "brightnessctl set +5% && pkill -RTMIN+3 i3blocks && ~/.config/i3blocks/blocklets/notify-brightness"
+bindsym XF86MonBrightnessDown exec --no-startup-id "brightnessctl set 5%- && pkill -RTMIN+3 i3blocks && ~/.config/i3blocks/blocklets/notify-brightness"
 
 bindsym XF86AudioPlay  exec --no-startup-id playerctl play-pause
 bindsym XF86AudioPause exec --no-startup-id playerctl play-pause
@@ -161,6 +161,7 @@ bindsym $mod+p exec --no-startup-id flameshot gui
 # ------- Floating rules -------
 for_window [window_role="pop-up"]      floating enable
 for_window [window_role="task_dialog"] floating enable
+for_window [window_type="dialog"]     floating enable
 for_window [class="Pavucontrol"]       floating enable
 for_window [class="Nm-connection-editor"] floating enable
 for_window [class="Blueman-manager"]   floating enable
@@ -181,7 +182,7 @@ exec --no-startup-id nm-applet
 exec --no-startup-id blueman-applet
 exec --no-startup-id feh --bg-fill ~/Pictures/wallpaper.jpg
 exec --no-startup-id dex --autostart --environment i3
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock -c 2E3440
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock-fancy -p
 exec --no-startup-id lxpolkit
 
 # ------- Bar -------
