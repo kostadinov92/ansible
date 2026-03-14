@@ -1,4 +1,11 @@
 #!/bin/bash
+# Left click: switch layout
+case $BLOCK_BUTTON in
+    1) dbus-send --dest=ru.gentoo.KbddService \
+           /ru/gentoo/KbddService \
+           ru.gentoo.kbdd.next_layout 2>/dev/null ;;
+esac
+
 ICON=$'\uf11c'
 LAYOUT=$(dbus-send --dest=ru.gentoo.KbddService \
     /ru/gentoo/KbddService \

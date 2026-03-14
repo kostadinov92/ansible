@@ -166,6 +166,9 @@ for_window [class="Nm-connection-editor"] floating enable
 for_window [class="Blueman-manager"]   floating enable
 for_window [title="File Transfer*"]    floating enable
 
+# Focus windows that request activation (prevents floating windows hiding behind tiled)
+focus_on_window_activation focus
+
 # ------- Keyboard layout -------
 # Define layouts (kbdd handles per-window tracking)
 exec_always --no-startup-id "setxkbmap -layout {{ keyboard_layouts }} -variant {{ keyboard_variant }} -option {{ keyboard_toggle }} && pkill kbdd; kbdd"
