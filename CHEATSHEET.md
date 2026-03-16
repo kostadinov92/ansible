@@ -12,6 +12,8 @@
 | `$mod+Tab` | Window switcher (rofi) |
 | `$mod+c` | Clipboard history (copyq) |
 | `$mod+p` / `Print` | Screenshot (flameshot) |
+| `F1` | Keybinding cheat sheet popup |
+| `$mod+Shift+p` | Power profile switcher |
 
 ## Focus
 
@@ -77,8 +79,9 @@
 
 | Key | Action |
 |---|---|
-| `Volume Up/Down` | Adjust volume (+notification) |
-| `Volume Mute` | Toggle mute (+notification) |
+| `Volume Up/Down` | Adjust volume 5% (+notification) |
+| `$mod+Volume Up/Down` | Fine volume 1% (+notification) |
+| `Mute` | Toggle mute (+notification) |
 | `Brightness Up/Down` | Adjust brightness (+notification) |
 | `Play/Pause` | Toggle media playback |
 | `Next/Prev` | Next/previous track |

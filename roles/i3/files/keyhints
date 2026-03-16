@@ -1,0 +1,68 @@
+  i3 Keybinding Cheat Sheet
+  ═══════════════════════════════════════
+
+  CORE
+  ────────────────────────────────────────
+  Super+Return          Open terminal
+  Super+q               Kill focused window
+  Super+d               App launcher (rofi)
+  Super+Tab             Window switcher
+  Super+c               Clipboard history
+  Super+p / Print       Screenshot
+  F1                    This cheat sheet
+
+  FOCUS
+  ────────────────────────────────────────
+  Super+h/j/k/l         Focus left/down/up/right
+  Super+Arrow keys      Focus left/down/up/right
+  Super+a               Focus parent container
+  Super+Space           Toggle focus tiled/floating
+
+  MOVE WINDOWS
+  ────────────────────────────────────────
+  Super+Shift+h/j/k/l   Move window
+  Super+Shift+Arrows     Move window
+  Hold Super + drag      Move floating window
+
+  LAYOUT
+  ────────────────────────────────────────
+  Super+b               Split horizontal
+  Super+v               Split vertical
+  Super+s               Stacking layout
+  Super+w               Tabbed layout
+  Super+e               Toggle split
+  Super+f               Fullscreen
+  Super+Shift+Space     Toggle floating
+
+  WORKSPACES
+  ────────────────────────────────────────
+  Super+1-9,0           Switch workspace
+  Super+Shift+1-9,0     Move to workspace
+
+  SCRATCHPAD
+  ────────────────────────────────────────
+  Super+Shift+minus     Send to scratchpad
+  Super+minus           Show scratchpad
+
+  RESIZE MODE
+  ────────────────────────────────────────
+  Super+r               Enter resize mode
+  h/j/k/l or Arrows     Resize (in mode)
+  Escape / Return       Exit resize mode
+
+  SESSION
+  ────────────────────────────────────────
+  Super+Shift+c         Reload config
+  Super+Shift+r         Restart i3
+  Super+Shift+e         Power menu
+  Super+Shift+x         Lock screen
+  Super+Shift+p         Power profile switcher
+
+  MEDIA
+  ────────────────────────────────────────
+  Volume Up/Down        Adjust volume (5%)
+  Super+Volume Up/Down  Fine volume (1%)
+  Mute                  Toggle mute
+  Brightness Up/Down    Adjust brightness
+  Play/Pause            Media toggle
+  Next/Prev             Media skip

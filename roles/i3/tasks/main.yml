@@ -26,6 +26,7 @@
       - arandr
       - autotiling
       - yad
+      - power-profiles-daemon
     state: present
 
 - name: Add user to video group (for brightnessctl)
@@ -84,6 +85,27 @@
     src: power-menu.sh
     dest: "{{ lookup('env', 'HOME') }}/.config/i3/power-menu.sh"
     mode: "0755"
+
+- name: Create i3 scripts directory
+  become: false
+  ansible.builtin.file:
+    path: "{{ lookup('env', 'HOME') }}/.config/i3/scripts"
+    state: directory
+    mode: "0755"
+
+- name: Copy i3 scripts
+  become: false
+  ansible.builtin.copy:
+    src: "scripts/"
+    dest: "{{ lookup('env', 'HOME') }}/.config/i3/scripts/"
+    mode: "0755"
+
+- name: Copy keybinding hints file
+  become: false
+  ansible.builtin.copy:
+    src: keyhints
+    dest: "{{ lookup('env', 'HOME') }}/.config/i3/keyhints"
+    mode: "0644"
 
 - name: Create i3blocks blocklets directory
   become: false
