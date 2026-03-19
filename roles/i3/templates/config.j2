@@ -39,7 +39,7 @@ bindsym $mod+Return exec --no-startup-id kitty
 bindsym $mod+q kill
 
 # App launcher (rofi)
-bindsym $mod+d exec --no-startup-id "rofi -modi drun,run -show drun"
+bindsym $mod+d exec --no-startup-id "rofi -modi drun,run,window -show drun"
 
 # Window switcher
 bindsym $mod+Tab exec --no-startup-id "rofi -modi window -show window"
@@ -197,7 +197,6 @@ exec --no-startup-id picom --config ~/.config/picom/picom.conf -b
 exec --no-startup-id dunst -config ~/.config/dunst/dunstrc
 exec --no-startup-id nm-applet
 exec --no-startup-id blueman-applet
-exec --no-startup-id feh --bg-fill ~/Pictures/wallpaper.jpg
 exec --no-startup-id dex --autostart --environment i3
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock-fancy -p
 exec --no-startup-id lxpolkit

@@ -27,6 +27,7 @@
       - autotiling
       - yad
       - power-profiles-daemon
+      - variety
     state: present
 
 - name: Add user to video group (for brightnessctl)
@@ -162,3 +163,10 @@
     path: "{{ lookup('env', 'HOME') }}/Pictures"
     state: directory
     mode: "0755"
+
+- name: Clone nordic wallpapers
+  become: false
+  ansible.builtin.git:
+    repo: https://github.com/linuxdotexe/nordic-wallpapers.git
+    dest: "{{ lookup('env', 'HOME') }}/Pictures/wallpapers"
+    update: false

@@ -1,67 +1,103 @@
 configuration {
     show-icons: true;
-    icon-theme: "Adwaita";
-    font: "MesloLGS Nerd Font 11";
+    icon-theme: "Papirus";
+    font: "MesloLGS Nerd Font 13";
+    display-drun: " Apps";
+    display-run: " Run";
+    display-window: " Windows";
+    drun-display-format: "{name}";
 }
 
 * {
-    bg:       #2E3440;
+    bg:       #2E3440F2;
     bg-alt:   #3B4252;
     fg:       #D8DEE9;
-    accent:   #5E81AC;
+    fg-dim:   #4C566A;
+    accent:   #88C0D0;
+    accent2:  #5E81AC;
     urgent:   #BF616A;
+    green:    #A3BE8C;
 }
 
 window {
     background-color: @bg;
     border:           2px;
-    border-color:     @accent;
-    border-radius:    6px;
-    width:            40%;
+    border-color:     @accent2;
+    border-radius:    12px;
+    width:            35%;
+    padding:          0;
 }
 
 mainbox {
     background-color: transparent;
+    spacing:          0;
 }
 
 inputbar {
     background-color: @bg-alt;
     text-color:       @fg;
-    padding:          8px 12px;
-    border-radius:    6px 6px 0 0;
+    padding:          14px 18px;
+    border-radius:    12px 12px 0 0;
+    border:           0 0 2px 0;
+    border-color:     @accent2;
+    spacing:          10px;
+    children:         [ prompt, entry ];
 }
 
 prompt {
     text-color: @accent;
+    font: "MesloLGS Nerd Font 15";
 }
 
 entry {
-    text-color:       @fg;
-    placeholder-color: #4C566A;
+    text-color:        @fg;
+    placeholder:       "Search...";
+    placeholder-color: @fg-dim;
 }
 
 listview {
     background-color: transparent;
-    lines:            8;
-    padding:          4px 0;
+    lines:            10;
+    padding:          8px 6px;
+    spacing:          4px;
+    scrollbar:        true;
+}
+
+scrollbar {
+    background-color: @bg-alt;
+    handle-color:     @accent2;
+    handle-width:     4px;
+    border-radius:    2px;
 }
 
 element {
     background-color: transparent;
     text-color:       @fg;
-    padding:          6px 12px;
+    padding:          10px 14px;
+    border-radius:    8px;
+    spacing:          12px;
 }
 
 element selected {
-    background-color: @accent;
+    background-color: @accent2;
     text-color:       #ECEFF4;
-    border-radius:    4px;
 }
 
 element-icon {
-    size: 24px;
+    size: 28px;
+    vertical-align:   0.5;
 }
 
 element-text {
     vertical-align: 0.5;
+}
+
+message {
+    background-color: transparent;
+    padding:          8px 14px;
+}
+
+textbox {
+    background-color: transparent;
+    text-color:       @fg-dim;
 }
