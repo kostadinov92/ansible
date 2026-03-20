@@ -117,6 +117,8 @@
     name:
       - xdg-utils
       - xdg-user-dirs
+      - xdg-desktop-portal
+      - xdg-desktop-portal-gtk
       - polkitd
       - udisks2
       - gvfs

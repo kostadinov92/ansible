@@ -5,6 +5,8 @@
       - gimp
       - libreoffice
       - flatpak
+      - gparted
+      - update-notifier
     state: present
 
 - name: Add Flathub repository
