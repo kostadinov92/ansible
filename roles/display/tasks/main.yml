@@ -17,9 +17,19 @@
     name:
       - lightdm
       - lightdm-gtk-greeter
+      - accountsservice
     state: present
   environment:
     DEBIAN_FRONTEND: noninteractive
+
+- name: Set i3 as default LightDM session
+  ansible.builtin.ini_file:
+    path: /etc/lightdm/lightdm.conf.d/50-i3.conf
+    section: "Seat:*"
+    option: user-session
+    value: i3
+    create: true
+    mode: "0644"
 
 - name: Check if another display manager is active
   ansible.builtin.stat:
@@ -117,8 +127,6 @@
     name:
       - xdg-utils
       - xdg-user-dirs
-      - xdg-desktop-portal
-      - xdg-desktop-portal-gtk
       - polkitd
       - udisks2
       - gvfs
